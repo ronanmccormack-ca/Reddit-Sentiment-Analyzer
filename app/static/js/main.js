@@ -13,38 +13,48 @@ function loadSubreddits() {
     });
 }
 function loadPosts(subreddit) {
-    if (!subreddit) return; // If no subreddit is selected, do nothing
-
     $('#postList').empty(); // Clear existing posts
 
     $.get('/get_posts/' + subreddit, function(posts) {
         posts.forEach(function(post) {
-            $('#postList').append($('<li>')
-                                   .text(post.title)
-                                   .attr('data-id', post.id)
-                                   .click(function() {
-                                       loadComments($(this).data('id'));
-                                   }));
+            var listItem = $('<li>')
+                .text(post.title)
+                .attr('data-id', post.id)
+                .click(function() {
+                    var postId = $(this).data('id');
+                    loadComments(postId);
+                    loadTopWords(postId);
+                });
+
+            $('#postList').append(listItem);
         });
     });
 }
+
 function loadComments(postId) {
     $('#commentSection').empty();
     $('#sentimentCounts').empty();
-    $('#topWords').empty();
-    $('#topWords').append('<ul></ul>'); // Add an unordered list element
 
+    // Load comments and their sentiments
     $.get('/get_comments/' + postId, function(data) {
-        var sentiments = data.sentiment_counts;
+        var sentiments = data;
         var countsText = 'Positive: ' + sentiments.positive + ', Neutral: ' + sentiments.neutral + ', Negative: ' + sentiments.negative;
         $('#sentimentCounts').text(countsText);
-
-        data.top_words.forEach(function(word) {
-            // Optionally capitalize the first letter of each word
-            var capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
-            $('#topWords ul').append('<li>' + capitalizedWord + '</li>');
-        });
     });
 }
 
+function loadTopWords(postId) {
+    $('#topWords').empty();
+    $('#topWords').append('<ul></ul>'); // Add an unordered list element
 
+    // Load top phrases
+    $.get('/get_top_phrases/' + postId + '/' + 2, function(topPhrases) {
+        topPhrases.forEach(function(phrase) {
+            // Capitalize the first letter of each phrase
+            var capitalizedPhrase = phrase.split(' ').map(function(word) {
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }).join(' ');
+            $('#topWords ul').append($('<li>').text(capitalizedPhrase));
+        });
+    });
+}

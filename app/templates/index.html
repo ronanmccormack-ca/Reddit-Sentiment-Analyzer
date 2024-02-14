@@ -10,7 +10,7 @@
     <h1>Reddit Sentiment Analyzer</h1>
 
     <div class="subreddit-selector">
-        <label for="subreddit">Choose a Subreddit:</label>
+        <label for="subreddit">Choose a Popular Subreddit:</label>
         <select id="subreddit" onchange="loadPosts(this.value)">
             <option value="">Select a subreddit</option>
             <!-- Subreddit options will be loaded here -->
@@ -18,21 +18,24 @@
     </div>
 
     <div class="posts">
-        <h2>Posts</h2>
+        <h2>Hot Posts</h2>
         <ul id="postList">
             <!-- Posts will be loaded here -->
         </ul>
     </div>
 
-    <div class="comments">
+     <div class="comments">
         <h2>Comments</h2>
         <div id="commentSection">
             <!-- Comments will be loaded here -->
         </div>
+        <div id="sentimentCounts"></div>
     </div>
-    <div id="sentimentCounts"></div>
-    <div id="topWords"></div>
-    <div id="topWords" class="top-words"></div>
+
+    <div class="top-words">
+        <h2>Top Phrases</h2>
+        <ul id="topWords"></ul>
+    </div>
 
 
 
