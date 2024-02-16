@@ -4,6 +4,12 @@
 
 Reddit Sentiment Analyzer is a web application designed to analyze and visualize the sentiment of comments on Reddit posts. This application allows users to select a subreddit, view recent posts, and analyze the sentiments of comments for each post, categorizing them as positive, neutral, or negative. It also highlights the most frequently used words in the comments.
 
+## Live Application
+
+The Reddit Sentiment Analyzer is available live at: [https://reddit-sentiment-analyzer.onrender.com](https://reddit-sentiment-analyzer.onrender.com)
+
+Feel free to check it out and explore its features!
+
 ## Features
 
 - **Subreddit Selection**: Choose from popular subreddits or search for specific ones.
